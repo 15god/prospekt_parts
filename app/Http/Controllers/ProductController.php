@@ -13,7 +13,8 @@ class ProductController extends Controller
     public function index()
     {
         return view('index', [
-            'products' => Product::all()
+            'products' => Product::all(),
+            'total' => Product::query()->sum('quantity'),//can use js or smth
         ]);
     }
 
