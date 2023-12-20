@@ -12,9 +12,12 @@ class ProductController extends Controller
      */
     public function index()
     {
+
+
         return view('index', [
-            'products' => Product::all(),
-            'total' => Product::query()->sum('quantity'),//can use js or smth
+            'products' => Product::query()->limit(50)->get(),
+            'total' => Product::query()->sum('quantity'),
+            'positions' => Product::query()->count(),
         ]);
     }
 
@@ -23,9 +26,9 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-        ]);
+//        $request->validate([
+//            'name' => 'required',
+//        ]);
 
         Product::create($request->all());
 

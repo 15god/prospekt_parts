@@ -9,7 +9,7 @@
     </head>
     <body class="antialiased">
         <div id="app">
-            <parts-table :products="{{ $products }}" :total="{{ $total }}"/>
+            <parts-table :products="{{ $products }}" :positions="{{ $positions }} ":total="{{ $total }}"/>
         </div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
         <script src="https://cdn.tailwindcss.com"></script>

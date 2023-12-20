@@ -4,6 +4,10 @@
     import ReadModal from "./ReadModal.vue"
     import UpdateModal from "./UpdateModal.vue"
     import DeleteModal from "./DeleteModal.vue"
+    import { store } from "../xd.js";
+    import {reactive, ref} from "vue";
+
+    //const updateModalVisible = ref(false);
 
     const props = defineProps({
         products: {
@@ -11,6 +15,7 @@
             type: Array,
         },
         total:{},
+        positions:{},
     })
 
     console.log(props.products);
@@ -24,7 +29,7 @@
             <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
                 <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
                     <div class="w-full md:w-1/2">
-                        <span class="text-white">Всего товаров на складе: {{total}}, по {{products.length}} позициям</span>
+                        <span class="text-white">Всего товаров на складе: {{total}}, по {{positions}} позициям</span>
                     </div>
                     <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
                         <button type="button" id="createProductModalButton" data-modal-target="createProductModal" data-modal-toggle="createProductModal" class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
@@ -116,6 +121,7 @@
             </div>
             <create-modal/>
             <read-modal/>
+            <update-modal :formValues="store.formValues" v-if="store.updateModalVisible"/>
             <delete-modal/>
         </div>
     </section>

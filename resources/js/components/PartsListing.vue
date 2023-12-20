@@ -1,13 +1,15 @@
 <script setup>
 import {ref} from "vue";
+import PartsTable from "./PartsTable.vue";
 
 const props = defineProps(['product'])
 
-const formValues = ref();
+import { store } from "../xd.js";
 const updateProduct = (product) => {
-    console.log(product);
-    formValues.value = product;
-    console.log(formValues.value);
+    store.formValues = product;
+    store.updateModalVisible = !store.updateModalVisible;
+    console.log(store.formValues);
+    console.log(store.updateModalVisible);
 }
 </script>
 
@@ -27,7 +29,7 @@ const updateProduct = (product) => {
             <div v-bind:id="product.name + '-dropdown'" class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
                 <ul class="py-1 text-sm" v-bind:aria-labelledby="product.name + '-dropdown-button'">
                     <li>
-                        <button type="button" data-modal-target="updateProductModal" data-modal-toggle="updateProductModal" class="flex w-full items-center py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white text-gray-700 dark:text-gray-200"
+                        <button type="button" class="flex w-full items-center py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white text-gray-700 dark:text-gray-200"
                         @click.prevent="updateProduct(product)">
                             <svg class="w-4 h-4 mr-2" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 20 20" fill="currentColor" aria-hidden="true">
                                 <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
