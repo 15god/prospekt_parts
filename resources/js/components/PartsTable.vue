@@ -5,7 +5,7 @@
     import UpdateModal from "./UpdateModal.vue"
     import DeleteModal from "./DeleteModal.vue"
     import { store } from "../xd.js";
-    import {reactive, ref} from "vue";
+    import {reactive, ref, } from "vue";
 
     //const updateModalVisible = ref(false);
 
@@ -16,9 +16,13 @@
         },
         total:{},
         positions:{},
+        status: {
+            type: String
+        }
     })
 
     console.log(props.products);
+    console.log(props.status);
 </script>
 
 <template>
@@ -120,9 +124,7 @@
 <!--                </nav>-->
             </div>
             <create-modal/>
-            <read-modal/>
             <update-modal :formValues="store.formValues" v-if="store.updateModalVisible"/>
-            <delete-modal/>
         </div>
     </section>
     <!-- End block -->

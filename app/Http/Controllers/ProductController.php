@@ -15,9 +15,10 @@ class ProductController extends Controller
 
 
         return view('index', [
-            'products' => Product::query()->limit(50)->get(),
+            'products' => Product::query()->limit(50)->orderBy('id', 'DESC')->get(),
             'total' => Product::query()->sum('quantity'),
             'positions' => Product::query()->count(),
+            'status' => json_encode(session('status') ?? "")
         ]);
     }
 
@@ -30,25 +31,46 @@ class ProductController extends Controller
 //            'name' => 'required',
 //        ]);
 
-        Product::create($request->all());
+        $queryStatus = Product::query()->create($request->all());
 
-        return redirect()->route('index')
-            ->with('success', 'Post created successfully.');
+        $response = $queryStatus ? 'record added' : 'no record added';
+
+        return redirect('/')->with([
+            'status' => json_encode($response)
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        $queryStatus = Product::query()->where('id', $request->id)->update([
+          "name" => $request->name,
+          "article" => $request->article,
+          "price" => $request->price,
+          "unit" => $request->unit,
+          "quantity" => $request->quantity,
+        ]);
+
+        $response = $queryStatus ? 'record updated' : 'record not affected';
+
+        return redirect('/')->with([
+            'status' => json_encode($response)
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        $queryStatus = Product::query()->where('id', $request->id)->delete();
+
+        $response = $queryStatus ? 'record deleted' : 'smth went wrong';
+
+        return redirect('/')->with([
+            'status' => json_encode($response)
+        ]);
     }
 }
